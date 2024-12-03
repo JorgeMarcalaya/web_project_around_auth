@@ -1,0 +1,8 @@
+@font-face {
+  src: url("../src/fonts/Inter-Black.woff2") format("woff2");
+  font-family: "Titulos";
+}
+@font-face {
+  font-family: "Subtitulos";
+  src: url("../src/fonts/Inter-Regular.woff2") format("woff2");
+}
