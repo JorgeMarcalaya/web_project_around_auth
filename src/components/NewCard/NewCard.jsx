@@ -1,13 +1,25 @@
-export default function NewCard() {
+import { useState } from "react";
+
+export default function NewCard({ onAddCard }) {
+  const [title, setTitle] = useState("");
+  const [link, setLink] = useState("");
+  const handleCardFormSubmit = (evt) => {
+    evt.preventDefault();
+    onAddCard(title, link);
+    setTitle("");
+    setLink("");
+  };
   return (
-    <form className="form" id="form__add">
+    <form className="form" id="form__add" onSubmit={handleCardFormSubmit}>
       <input
         className="form__input"
         placeholder="Título"
         id="place"
         required
-        minlength="2"
-        maxlength="30"
+        minLength="2"
+        maxLength="30"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
       />
       <span className="form__line"></span>
       <input
@@ -16,6 +28,8 @@ export default function NewCard() {
         placeholder="Enlace a la imagen"
         id="link"
         required
+        value={link}
+        onChange={(e) => setLink(e.target.value)}
       />
       <span className="form__line"></span>
       <button className="popup__add-btn" id="cardbutton">

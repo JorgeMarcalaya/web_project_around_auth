@@ -7,7 +7,7 @@ import EditProfile from "../EditProfile/EditProfile.jsx";
 import EditAvatar from "../Avatar/EditAvatar.jsx";
 import Card from "../Main/components/Card/Card.jsx";
 
-const cards = [
+const initialCards = [
   {
     isLiked: false,
     _id: "5d1f0611d321eb4bdcd707dd",
@@ -27,11 +27,41 @@ const cards = [
 ];
 
 function Main() {
+  const [card, setCards] = useState(initialCards);
+  const handleAddCard = (title, link) => {
+    const newCard = {
+      isLiked: false,
+      _id: Date.now().toString(),
+      name: title,
+      link,
+      owner: "5d1f0611d321eb4bdcd707dd",
+      createdAt: new Date().toISOString(),
+    };
+    setCards((firstCards) => {
+      const updatedListCards = [newCard, ...firstCards];
+      return updatedListCards;
+    });
+    setPopup(null);
+  };
+  const [profile, setProfile] = useState({
+    name: "Cousteau",
+    about: "Explorador",
+  });
   const [popup, setPopup] = useState(null);
-  const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
+  const newCardPopup = {
+    title: "Nuevo lugar",
+    children: <NewCard onAddCard={handleAddCard} />,
+  };
   const editProfilePopup = {
     title: "Editar Perfil",
-    children: <EditProfile />,
+    children: (
+      <EditProfile
+        onSave={(name, about) => {
+          setProfile({ name, about });
+          setPopup(null);
+        }}
+      />
+    ),
   };
   const editAvatarPopup = {
     title: "Cambiar foto de perfil",
@@ -39,7 +69,6 @@ function Main() {
   };
   function handleOpenPopup(popup) {
     setPopup(popup);
-    console.log("Me ejecute");
   }
   function handleClosePopup(popup) {
     setPopup(null);
@@ -64,10 +93,10 @@ function Main() {
         <div className="nav__profile">
           <ul className="nav__profile-list">
             <li>
-              <h1 className="nav__profile-nombre">Cousteau</h1>
+              <h1 className="nav__profile-nombre">{profile.name}</h1>
             </li>
             <li>
-              <h2 className="nav__profile-about">Explorador</h2>
+              <h2 className="nav__profile-about">{profile.about}</h2>
             </li>
           </ul>
           <a
@@ -95,7 +124,7 @@ function Main() {
         </a>
       </nav>
       <section className="elements">
-        {cards.map((card) => (
+        {card.map((card) => (
           <Card key={card._id} card={card} handleOpenPopup={handleOpenPopup} />
         ))}
       </section>
