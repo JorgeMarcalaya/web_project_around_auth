@@ -38,7 +38,7 @@ export default function Card(props) {
     <div className="element">
       <a href="#">
         <img
-          src="../../../../../images/Trash.png"
+          src="../src/images/Trash.png"
           alt="Botón Eliminar"
           className={`element__icon-delete ${
             isOwner ? "" : "element__icon-delete_disabled"
@@ -58,7 +58,7 @@ export default function Card(props) {
         <h2 className="element__title">{name}</h2>
         <a href="#">
           <img
-            src="../../../../../images/Megusta.png"
+            src="../src/images/Megusta.png"
             alt="Botón Me gusta"
             className={cardLikeButtonClassName}
             onClick={handleLikeClick}
