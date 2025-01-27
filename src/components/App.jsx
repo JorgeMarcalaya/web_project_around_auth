@@ -1,9 +1,9 @@
-import Header from "../src/components/Header/Header.jsx";
-import Main from "../src/components/Main/Main.jsx";
-import Footer from "../src/components/Footer/Footer.jsx";
+import Header from "./Header/Header.jsx";
+import Main from "./Main/Main.jsx";
+import Footer from "./Footer/Footer.jsx";
 import { useState, useEffect } from "react";
-import { userContext } from "../src/contexts/CurrentUserContext.js";
-import { apiCards, apiUser, apiAvatar } from "./utils/api.js";
+import { userContext } from "../contexts/CurrentUserContext.js";
+import { apiCards, apiUser, apiAvatar } from "../utils/api.js";
 export let CurrentUserContext = userContext;
 
 function App() {
