@@ -6,7 +6,7 @@ import NewCard from "./components/NewCard/NewCard.jsx";
 import EditProfile from "./components/EditProfile/EditProfile.jsx";
 import EditAvatar from "./components/Avatar/EditAvatar.jsx";
 import Card from "./components/Card/Card.jsx";
-import { CurrentUserContext } from "../App.jsx";
+import { CurrentUserContext } from "./App.jsx";
 
 function Main({
   cards,
