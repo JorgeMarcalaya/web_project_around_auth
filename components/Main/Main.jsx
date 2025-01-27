@@ -1,5 +1,5 @@
-import buttonEdit from "../../../images/botoneditar.png";
-import buttonAdd from "../../../images/botonañadir.png";
+import buttonEdit from "../../images/botoneditar.png";
+import buttonAdd from "../../images/botonañadir.png";
 import { useContext, useEffect, useState } from "react";
 import Popup from "./components/Popup/Popup.jsx";
 import NewCard from "../NewCard/NewCard.jsx";
