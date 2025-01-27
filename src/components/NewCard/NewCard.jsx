@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useRef } from "react";
 
-export default function NewCard({ onAddCard }) {
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
-  const handleCardFormSubmit = (evt) => {
-    evt.preventDefault();
-    onAddCard(title, link);
-    setTitle("");
-    setLink("");
-  };
+export default function NewCard({ handleAddCard }) {
+  const titleRef = useRef({});
+  const linkRef = useRef({});
+  function handleSubmit(event) {
+    event.preventDefault();
+    handleAddCard({
+      name: titleRef.current.value,
+      link: linkRef.current.value,
+    });
+    titleRef.current.value = "";
+    linkRef.current.value = "";
+  }
   return (
-    <form className="form" id="form__add" onSubmit={handleCardFormSubmit}>
+    <form className="form" id="form__add" onSubmit={handleSubmit}>
       <input
         className="form__input"
         placeholder="Título"
@@ -18,8 +21,7 @@ export default function NewCard({ onAddCard }) {
         required
         minLength="2"
         maxLength="30"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        ref={titleRef}
       />
       <span className="form__line"></span>
       <input
@@ -28,8 +30,7 @@ export default function NewCard({ onAddCard }) {
         placeholder="Enlace a la imagen"
         id="link"
         required
-        value={link}
-        onChange={(e) => setLink(e.target.value)}
+        ref={linkRef}
       />
       <span className="form__line"></span>
       <button className="popup__add-btn" id="cardbutton">
