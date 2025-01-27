@@ -1,12 +1,12 @@
-import buttonEdit from "../../../images/botoneditar.png";
-import buttonAdd from "../../../images/botonañadir.png";
+import buttonEdit from "../../images/botoneditar.png";
+import buttonAdd from "../../images/botonañadir.png";
 import { useContext, useEffect, useState } from "react";
-import Popup from "./components/Popup/Popup.jsx";
-import NewCard from "./components/NewCard/NewCard.jsx";
-import EditProfile from "./components/EditProfile/EditProfile.jsx";
-import EditAvatar from "./components/Avatar/EditAvatar.jsx";
-import Card from "./components/Card/Card.jsx";
-import { CurrentUserContext } from "../App.jsx";
+import Popup from "./Popup.jsx";
+import NewCard from "./NewCard.jsx";
+import EditProfile from "./EditProfile.jsx";
+import EditAvatar from "./EditAvatar.jsx";
+import Card from "./Card.jsx";
+import { CurrentUserContext } from "./App.jsx";
 
 function Main({
   cards,
