@@ -2,9 +2,8 @@ import Header from "./Header.jsx";
 import Main from "./Main.jsx";
 import Footer from "./Footer.jsx";
 import { useState, useEffect } from "react";
-import { userContext } from "../contexts/CurrentUserContext.js";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import { apiCards, apiUser, apiAvatar } from "../utils/api.js";
-export let CurrentUserContext = userContext;
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});

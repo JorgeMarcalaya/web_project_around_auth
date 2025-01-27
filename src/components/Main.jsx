@@ -6,7 +6,7 @@ import NewCard from "./NewCard.jsx";
 import EditProfile from "./EditProfile.jsx";
 import EditAvatar from "./EditAvatar.jsx";
 import Card from "./Card.jsx";
-import { CurrentUserContext } from "./App.jsx";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function Main({
   cards,
