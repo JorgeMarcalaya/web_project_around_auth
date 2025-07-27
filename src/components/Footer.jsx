@@ -1,5 +1,5 @@
 function Footer() {
-  return <footer className="footer">©2020 Jorge</footer>;
+  return <footer className="footer">©2025 Jorge</footer>;
 }
 
 export default Footer;

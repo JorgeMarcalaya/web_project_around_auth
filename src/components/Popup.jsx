@@ -9,7 +9,7 @@ export default function Popup(props) {
       >
         <a className="popup__close-btn" id="profile" onClick={onClose}>
           <img
-            src="../../../../../images/botonclose.png"
+            src="../src/images/botonclose.png"
             alt="Botón de cierre"
             className="popup__close-icon"
           />

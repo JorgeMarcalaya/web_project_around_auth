@@ -1,14 +1,70 @@
 import Header from "./Header.jsx";
 import Main from "./Main.jsx";
 import Footer from "./Footer.jsx";
+import Login from "./Login.jsx";
+import Register from "./Register.jsx";
 import { useState, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import { apiCards, apiUser, apiAvatar } from "../utils/api.js";
+import { register, login, validate } from "../utils/auth.js";
+import { Routes, Route, useNavigate, Navigate } from "react-router";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [userEmail, setUserEmail] = useState("");
   const [popup, setPopup] = useState(null);
   const [cards, setCards] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isRegisterIn, setIsRegisterIn] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLoginValidate = (email, password) => {
+    login(email, password)
+      .then(() => validate())
+      .then((emaildata) => {
+        setIsLoggedIn(true);
+        console.log("Usuario conectado:", emaildata.data.email);
+        setUserEmail(emaildata.data.email);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error("Error al validar", err);
+        handleOpenPopup({
+          children: <ProtectedRoute />,
+        });
+      });
+  };
+
+  const handleRegister = (email, password) => {
+    register(email, password)
+      .then((emaildata) => {
+        setIsRegisterIn(true);
+      })
+      .catch((err) => {
+        console.error("Error al validar", err);
+        handleOpenPopup({
+          children: <ProtectedRoute />,
+        });
+      });
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      validate()
+        .then((emaildata) => {
+          setIsLoggedIn(true);
+          setUserEmail(emaildata.data.email);
+          console.log("Usuario conectado:", emaildata.data.email);
+          navigate("/");
+        })
+        .catch(() => {
+          setIsLoggedIn(false);
+        });
+    }
+  }, []);
+
   useEffect(() => {
     apiCards.getInitialCards([], (data) => {
       const processedCards = data.map((card) => ({
@@ -118,17 +174,52 @@ function App() {
       value={{ currentUser, handleUpdateUser, handleUpdateAvatar }}
     >
       <div className="body page">
-        <Header />
-        <Main
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          onOpenPopup={handleOpenPopup}
-          onClosePopup={handleClosePopup}
-          popup={popup}
-          onAddCard={handleAddPlaceSubmit}
-        />
-        <Footer />
+        <Header email={userEmail} />
+        <Routes>
+          <Route
+            path="/signin"
+            element={
+              <Login
+                popup={popup}
+                onClosePopup={handleClosePopup}
+                onOpenPopup={handleOpenPopup}
+                onLoginSubmit={handleLoginValidate}
+              />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Register
+                popup={popup}
+                onClosePopup={handleClosePopup}
+                onOpenPopup={handleOpenPopup}
+                onRegisterSubmit={handleRegister}
+              />
+            }
+          />
+          <Route
+            path="/"
+            element={
+              isLoggedIn ? (
+                <>
+                  <Main
+                    cards={cards}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete}
+                    onOpenPopup={handleOpenPopup}
+                    onClosePopup={handleClosePopup}
+                    popup={popup}
+                    onAddCard={handleAddPlaceSubmit}
+                  />
+                  <Footer />
+                </>
+              ) : (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+        </Routes>
       </div>
     </CurrentUserContext.Provider>
   );
